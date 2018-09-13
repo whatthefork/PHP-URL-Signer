@@ -29,7 +29,7 @@ Dirt simple installation: Copy the class file in your project. That's it, the cl
 It's been tested with PHP 7.2.x
 
 ## License
-You're free to use this code however you see fit, it's licenses under GPLv2. Use at your own risk! No warranty is expressed nor implied.
+You're free to use this code however you see fit, it's licensed under GPLv2. Use at your own risk! No warranty is expressed nor implied.
 
 The GPLv2 License:
 
