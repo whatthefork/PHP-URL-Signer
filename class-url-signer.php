@@ -46,7 +46,7 @@ class Custom_URL_Signer {
 	  */
 	public static function sign( $url, $expires = '' ) { 
 	
-		// Use default expiration? 
+		// Use default expiration if none passed to this method
 		if ( empty( $expires ) )
 			$expires = self::$expires_in;
 
