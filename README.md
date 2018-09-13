@@ -1,5 +1,5 @@
 # PHP-URL-Signer
-Create URLs that tampor resistance and have a limited life time
+Create URLs that are reasonably tamper resistance and have a limited life time.
 
 ```php
 include( 'class-url-signer.php' );
