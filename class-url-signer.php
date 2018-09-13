@@ -8,7 +8,7 @@
   * USAGE: 
   *
   * Sign a URL: 
-	
+  *
   * include( 'class-url-signer.php' );
   * $signer::sign( 'https://somedomainname.nul', '5 HOURS' );
   *
