@@ -53,7 +53,7 @@ class Custom_URL_Signer {
 		$time = self::current_time( 'timestamp' );
 
 		$expire_timestamp = strtotime( '+' . $expires, $time );
-
+		
 		// build a signature hash string
 		$signature = hash_hmac( 'sha256', $expire_timestamp . '::' . $url . '::' . self::$key, self::$key );
 
@@ -87,19 +87,21 @@ class Custom_URL_Signer {
 		// find the signature value 
 		$signature = isset( $args['signature'] ) ? $args['signature'] : false; 
 		
+		// Got what we need to verify? 
 		if ( empty( $expires ) || empty( $signature ) || intval( $expires ) <= 0 )
 			return false; 
 		
+		// Get the time
 		$time = self::current_time( 'timestamp' ); // GMT
 		
 		if ( $expires < $time ) 
 			return false; 
 		
-		// Remove expires and signature args and rebuild the URL without them to compare against the original URL used to generate the hash
+		// Remove expires and signature args
 		unset( $args[ 'expires'] );
-		
 		unset( $args[ 'signature'] );
 		
+		// Rebuild query args with remaining args
 		$args2 = array();
 		
 		foreach( $args as $k => $v ) 
