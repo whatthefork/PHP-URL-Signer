@@ -74,34 +74,35 @@ class Custom_URL_Signer {
 		
 		// parse the url, we need the query parts
 		$parts = parse_url( $url  );
-		
+
 		if ( empty( $parts[ 'query' ] ) ) 
 			return false; 
 			
 		// get query parts into an array 
 		$args = self::parse_args( $parts['query'] );
-		
+
+		// No args? Then the URL isn't valid, it should have "expires" and "signature" query vars. 
+		if ( empty( $args ) )
+			return false; 
+
 		// find the expires value
 		$expires = isset( $args['expires'] ) ? $args['expires'] : false; 
 		
 		// find the signature value 
 		$signature = isset( $args['signature'] ) ? $args['signature'] : false; 
 		
-		// Got what we need to verify? 
 		if ( empty( $expires ) || empty( $signature ) || intval( $expires ) <= 0 )
 			return false; 
 		
-		// Get the time
 		$time = self::current_time( 'timestamp' ); // GMT
 		
 		if ( $expires < $time ) 
 			return false; 
 		
-		// Remove expires and signature args
-		unset( $args[ 'expires'] );
+		// Remove expires and signature args and rebuild the URL without them to compare against the original URL used to generate the hash
+		unset( $args[ 'expires'] );		
 		unset( $args[ 'signature'] );
-		
-		// Rebuild query args with remaining args
+
 		$args2 = array();
 		
 		foreach( $args as $k => $v ) 
@@ -113,7 +114,10 @@ class Custom_URL_Signer {
 			$parts['path'] = '';
 			
 		// Put the URL back together without expires and signature 
-		$url = $parts['scheme'] . '://' . $parts['host'] . $parts['path'] . '?' . $args;
+		$url = $parts['scheme'] . '://' . $parts['host'] . $parts['path'];
+		
+		if ( !empty( $args ) ) 
+			$url .= '?' . $args;
 
 		// Get a hash of what we expect the query's signature (hash) to be
 		$expected = hash_hmac( 'sha256', $expires . '::' . $url . '::' . self::$key, self::$key );
@@ -123,7 +127,6 @@ class Custom_URL_Signer {
 		$result = hash_equals( $expected, $signature );
 
 		return $result;
-		
 	}
 	
 	// ALL METHODS BELOW ARE FROM WORDPRESS CORE CODE: 
