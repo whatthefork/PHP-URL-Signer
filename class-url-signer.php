@@ -316,7 +316,7 @@ class Custom_URL_Signer {
 	* @return mixed Stripped value.
 	*/
 	private static function stripslashes_deep( $value ) {
-		return self::map_deep( $value, 'stripslashes_from_strings_only' );
+		return self::map_deep( $value, __CLASS__ . '::stripslashes_from_strings_only' );
 	}
 
 	/**
