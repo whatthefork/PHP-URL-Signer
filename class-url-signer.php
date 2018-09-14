@@ -12,7 +12,7 @@
   * include( 'class-url-signer.php' );
   * $signer::sign( 'https://somedomainname.nul', '5 HOURS' );
   *
-  * Verify a URL's signature
+  * Verify a URL's signature, the URL below in verify() is what sign() returns. 
   *
   * include( 'class-url-signer.php' );
   * $result = $signer::verify( 'https://somedomainname.nul/?expires=xxxx&signature=xxxx' ); 
