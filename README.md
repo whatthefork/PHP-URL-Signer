@@ -28,6 +28,10 @@ Dirt simple installation: Copy the class file in your project. That's it, the cl
 
 It's been tested with PHP 7.2.x
 
+## Hash algorithm
+
+The code, as is, uses SHA256 since that is available in most PHP installations. You can change it to whatever your system supports if you have the need. 
+
 ## License
 You're free to use this code however you see fit, it's licensed under GPLv2. Use at your own risk! No warranty is expressed nor implied.
 
