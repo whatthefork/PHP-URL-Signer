@@ -8,11 +8,11 @@
   * USAGE: 
   *
   * Sign a URL: 
-	
+  *
   * include( 'class-url-signer.php' );
   * $signer::sign( 'https://somedomainname.nul', '5 HOURS' );
   *
-  * Verify a URL's signature
+  * Verify a URL's signature, the URL in the sample below is returned by sign()
   *
   * include( 'class-url-signer.php' );
   * $result = $signer::verify( 'https://somedomainname.nul/?expires=xxxx&signature=xxxx' ); 
@@ -428,7 +428,7 @@ class Custom_URL_Signer {
 
 }
 
-/**
+
 // Simple test code: 
 
 $signer = new Custom_URL_Signer;
@@ -451,4 +451,4 @@ var_dump( $result );
 echo "\n\n";
 
 exit;
-*/
+
