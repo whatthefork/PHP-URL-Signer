@@ -22,7 +22,7 @@
   */
 class Custom_URL_Signer { 
 
-	// *** Define a secret key ***
+	// *** Define a secret key, used to create the signature ***
 	private static $key = 'Your complicated really long secret key goes here!';
 	
 	// Your GMT offset, helpful for getting the time in the correct timezone 
