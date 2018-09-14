@@ -10,7 +10,7 @@ $signer::sign( 'https://somedomainname.nul', '5 HOURS' );
 // => Use standard PHP strtotime() notation: '5 HOURS', '30 DAYS', '10 MINUTES', etc
 // => Note: This works with URLs that have query parameters too. 
 ```
-This will output an URL that looks like `https://somedomainname.nul/?expires=xxxx&signature=xxxx`.
+This will output a URL that looks like `https://somedomainname.nul/?expires=xxxx&signature=xxxx`.
 
 Verify the URL like this: 
 
