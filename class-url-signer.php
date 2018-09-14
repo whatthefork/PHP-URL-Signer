@@ -34,6 +34,12 @@ class Custom_URL_Signer {
 	// A default URL validity period. URLs older than this fail verification
 	private static $expires_in = '5 HOURS'; // Standard PHP strtotime() notation. 
 	
+	private static $algorithm; 
+	
+	function __construct( $algorithm = 'sha256' ) { 
+		self::$algorithm = $algorithm;
+	}
+	
 	/**
 	  *
 	  * Sign a URL and return it with two new params appended: "expires" and "signature"
@@ -49,6 +55,10 @@ class Custom_URL_Signer {
 		// Use default expiration? 
 		if ( empty( $expires ) )
 			$expires = self::$expires_in;
+			
+		// Use default algorithm? 
+		if ( empty( self::$algorithm ) )
+			self::$algorithm = 'sha256';
 
 		// Current timestamp, GMT time
 		// If you use self::current_time( 'timestamp', false ) you get your local system time instead
@@ -59,7 +69,7 @@ class Custom_URL_Signer {
 		$expire_timestamp = strtotime( '+' . $expires, $time ); // GMT
 
 		// build a signature hash string
-		$signature = hash_hmac( 'sha256', $expire_timestamp . '::' . $url . '::' . self::$key, self::$key );
+		$signature = hash_hmac( self::$algorithm, $expire_timestamp . '::' . $url . '::' . self::$key, self::$key );
 
 		// append the hash and expiration time to the url and return it
 		return self::add_query_arg( array( 'expires' => $expire_timestamp, 'signature' => $signature ), $url );
@@ -125,8 +135,12 @@ class Custom_URL_Signer {
 		if ( !empty( $args ) ) 
 			$url .= '?' . $args;
 
+		// Use default algorithm? 
+		if ( empty( self::$algorithm ) )
+			self::$algorithm = 'sha256';
+			
 		// Get a hash of what we expect the query's signature (hash) to be
-		$expected = hash_hmac( 'sha256', $expires . '::' . $url . '::' . self::$key, self::$key );
+		$expected = hash_hmac( self::$algorithm, $expires . '::' . $url . '::' . self::$key, self::$key );
 
 		// Test if we have what we expect
 		// Use hash_equals to avoid certain security issues
@@ -428,10 +442,10 @@ class Custom_URL_Signer {
 
 }
 
-/*
+
 // Simple test code: 
 
-$signer = new Custom_URL_Signer;
+$signer = new Custom_URL_Signer( 'SHA512' );
 
 // sign a URL 
 $url = $signer::sign( 'http://google.com/' );
@@ -451,4 +465,4 @@ var_dump( $result );
 echo "\n\n";
 
 exit;
-*/
+
