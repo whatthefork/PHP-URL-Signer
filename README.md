@@ -6,7 +6,7 @@ include( 'class-url-signer.php' );
 
 $signer::sign( 'https://somedomainname.nul', '5 HOURS' );
 
-// => The generated url will be valid for 5 days
+// => The generated url will be valid for 5 hours
 // => Use standard PHP strtotime() notation: '5 HOURS', '30 DAYS', '10 MINUTES', etc
 // => Note: This works with URLs that have query parameters too. 
 ```
