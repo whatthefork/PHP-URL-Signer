@@ -24,7 +24,7 @@ $result = Custom_URL_Signer::verify( 'https://somedomainname.nul/?expires=xxxx&s
 
 ## Installation
 
-Dirt simple installation: Copy the class file in your project. That's it, the class is self-contained and does not rely on any external code. 
+Dirt simple installation: Copy the class file into your project. That's it, the class is self-contained and does not rely on any external code. 
 
 It's been tested with PHP 7.2.x
 
