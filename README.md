@@ -4,7 +4,7 @@ Create URLs that are reasonably tamper resistant and have a limited life time.
 ```php
 include( 'class-url-signer.php' );
 
-$signer::sign( 'https://somedomainname.nul', '5 HOURS' );
+Custom_URL_Signer::sign( 'https://somedomainname.nul', '5 HOURS' );
 
 // => The generated url will be valid for 5 hours
 // => Use standard PHP strtotime() notation: '5 HOURS', '30 DAYS', '10 MINUTES', etc
@@ -17,7 +17,7 @@ Verify the URL like this:
 ```php
 include( 'class-url-signer.php' );
 
-$result = $signer::verify( 'https://somedomainname.nul/?expires=xxxx&signature=xxxx' );
+$result = Custom_URL_Signer::verify( 'https://somedomainname.nul/?expires=xxxx&signature=xxxx' );
 
 // => $result will be true or false
 ```
