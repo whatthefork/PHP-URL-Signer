@@ -3,7 +3,7 @@
   *
   * Self-contained class that creates reasonably secure URLs with an expiration.
   *
-  * URLs are signed with hash signature that includes an exiration time. 
+  * URLs are signed with hash signature that includes an expiration time. 
   *
   * USAGE: 
   *
