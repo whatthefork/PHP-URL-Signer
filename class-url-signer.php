@@ -25,11 +25,11 @@ class Custom_URL_Signer {
 	// *** Define a secret key, used to create the signature ***
 	private static $key = 'Your complicated really long secret key goes here!';
 	
-	// Your GMT offset, helpful for getting the time in the correct timezone 
+	// Your GMT offset, helpful for getting the time in the correct timezone
 	private static $gmt_offset = '-5';
 	
 	// Used by the current_time() method in this class
-	private static $hour_in_seconds = 84600;
+	private static $hour_in_seconds = 3600;
 	
 	// A default URL validity period. URLs older than this fail verification
 	private static $expires_in = '5 HOURS'; // Standard PHP strtotime() notation. 
