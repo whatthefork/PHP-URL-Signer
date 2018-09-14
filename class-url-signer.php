@@ -428,7 +428,7 @@ class Custom_URL_Signer {
 
 }
 
-/**
+/*
 // Simple test code: 
 
 $signer = new Custom_URL_Signer;
