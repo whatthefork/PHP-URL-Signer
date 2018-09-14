@@ -131,6 +131,7 @@ class Custom_URL_Signer {
 	
 	// ALL METHODS BELOW ARE FROM WORDPRESS CORE CODE
 	// Included in this class to make it self-contained and not dependant on external code
+	// Basic utility functions that making parsing stuff simple. 
 	
 	/**
 	* Parses a string into variables to be stored in an array.
