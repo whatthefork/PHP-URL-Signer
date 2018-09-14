@@ -3,16 +3,16 @@
   *
   * Self-contained class that creates reasonably secure URLs with an expiration.
   *
-  * URLs are signed with hash signature that includes an expiration time. 
+  * URLs are signed with hash signature that includes an exiration time. 
   *
   * USAGE: 
   *
   * Sign a URL: 
-  *
+	
   * include( 'class-url-signer.php' );
   * $signer::sign( 'https://somedomainname.nul', '5 HOURS' );
   *
-  * Verify a URL's signature, the URL below in verify() is what sign() returns. 
+  * Verify a URL's signature
   *
   * include( 'class-url-signer.php' );
   * $result = $signer::verify( 'https://somedomainname.nul/?expires=xxxx&signature=xxxx' ); 
@@ -22,10 +22,10 @@
   */
 class Custom_URL_Signer { 
 
-	// *** Define a secret key, used to create the signature ***
+	// *** Define a secret key ***
 	private static $key = 'Your complicated really long secret key goes here!';
 	
-	// Your GMT offset, helpful for getting the time in the correct timezone
+	// Your GMT offset, helpful for getting the time in the correct timezone 
 	private static $gmt_offset = '-5';
 	
 	// Used by the current_time() method in this class
@@ -46,14 +46,18 @@ class Custom_URL_Signer {
 	  */
 	public static function sign( $url, $expires = '' ) { 
 	
-		// Use default expiration if none passed to this method
+		// Use default expiration? 
 		if ( empty( $expires ) )
 			$expires = self::$expires_in;
 
+		// Current timestamp, GMT time
+		// If you use self::current_time( 'timestamp', false ) you get your local system time instead
+		// and in that case you MUST do the same in verify() otherwise verification might fail, depending on your expiration time frame
 		$time = self::current_time( 'timestamp' );
 
-		$expire_timestamp = strtotime( '+' . $expires, $time );
-		
+		// Create the expiration timestamp based on the expiration required
+		$expire_timestamp = strtotime( '+' . $expires, $time ); // GMT
+
 		// build a signature hash string
 		$signature = hash_hmac( 'sha256', $expire_timestamp . '::' . $url . '::' . self::$key, self::$key );
 
@@ -94,8 +98,10 @@ class Custom_URL_Signer {
 		if ( empty( $expires ) || empty( $signature ) || intval( $expires ) <= 0 )
 			return false; 
 		
+		// Get the current GTM time
 		$time = self::current_time( 'timestamp' ); // GMT
 		
+		// Already expired? 
 		if ( $expires < $time ) 
 			return false; 
 		
@@ -127,11 +133,10 @@ class Custom_URL_Signer {
 		$result = hash_equals( $expected, $signature );
 
 		return $result;
+		
 	}
 	
-	// ALL METHODS BELOW ARE FROM WORDPRESS CORE CODE
-	// Included in this class to make it self-contained and not dependant on external code
-	// Basic utility functions that making parsing stuff simple. 
+	// ALL METHODS BELOW ARE FROM WORDPRESS CORE CODE: 
 	
 	/**
 	* Parses a string into variables to be stored in an array.
@@ -413,29 +418,29 @@ class Custom_URL_Signer {
 	private static function current_time( $type, $gmt = 0 ) {
 		switch ( $type ) {
 			case 'mysql':
-					return ( $gmt ) ? gmdate( 'Y-m-d H:i:s' ) : gmdate( 'Y-m-d H:i:s', ( time() + ( self::$gmt_offset * self::$hour_in_seconds ) ) );
+				return ( $gmt ) ? gmdate( 'Y-m-d H:i:s' ) : gmdate( 'Y-m-d H:i:s', ( time() + ( self::$gmt_offset * self::$hour_in_seconds ) ) );
 			case 'timestamp':
-					return ( $gmt ) ? time() : time() + ( self::$gmt_offset * self::$hour_in_seconds );
+				return ( $gmt ) ? time() : time() + ( self::$gmt_offset * self::$hour_in_seconds );
 			default:
-					return ( $gmt ) ? date( $type ) : date( $type, time() + ( self::$gmt_offset * self::$hour_in_seconds ) );
+				return ( $gmt ) ? date( $type ) : date( $type, time() + ( self::$gmt_offset * self::$hour_in_seconds ) );
 		}
 	}
 
 }
 
-/**** 
+/**
 // Simple test code: 
 
 $signer = new Custom_URL_Signer;
 
 // sign a URL 
-$url = $signer::sign( 'http://google.com?file=123&blah=that-stuff' );
+$url = $signer::sign( 'http://google.com/' );
 
 // Show it
 echo $url . "\n\n";
 
 // Wait 3 seconds just grins 
-sleep( 3 );
+sleep( 1 );
 
 // Verify the signed URL 
 $result = $signer::verify( $url );
@@ -446,5 +451,4 @@ var_dump( $result );
 echo "\n\n";
 
 exit;
-
-***/ 
+*/
