@@ -35,7 +35,10 @@ class Custom_URL_Signer {
 	private static $expires_in = '5 HOURS'; // Standard PHP strtotime() notation. 
 	
 	private static $algorithm; 
-	
+
+	// Calling the constructor via "new Custom_URL_Signer()" is optional, only necessary if you want to use a different algorithm
+	// If you're Ok with sha265 you can call sign() and verify() as static methods initiating the constructor.
+	// https://github.com/whatthefork/PHP-URL-Signer/blob/master/README.md
 	function __construct( $algorithm = 'sha256' ) { 
 		self::$algorithm = $algorithm;
 	}
