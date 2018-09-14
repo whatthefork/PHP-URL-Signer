@@ -442,10 +442,10 @@ class Custom_URL_Signer {
 
 }
 
-
+/*
 // Simple test code: 
 
-$signer = new Custom_URL_Signer( 'SHA512' );
+$signer = new Custom_URL_Signer();
 
 // sign a URL 
 $url = $signer::sign( 'http://google.com/' );
@@ -465,4 +465,4 @@ var_dump( $result );
 echo "\n\n";
 
 exit;
-
+*/
